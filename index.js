@@ -13,7 +13,10 @@ const app = express();
 
 
 // Set Content Security Policy
-app.use(helmet());
+app.use(helmet({
+    contentSecurityPolicy: false,
+    xDownloadOptions: false,
+  }));
 
 // app.use(
 //    helmet.contentSecurityPolicy({
