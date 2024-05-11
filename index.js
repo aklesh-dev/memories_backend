@@ -11,29 +11,20 @@ import helmet  from 'helmet';
 dotenv.config();
 const app = express();
 
-const PORT = process.env.PORT || 5000;
-const CONNECTION_URL = process.env.CONNECTION_URL;
-
-mongoose.connect(CONNECTION_URL)
-   .then(() =>  app.listen(PORT, () => console.log(`Server running on port: ${PORT}`)))
-   .catch((error) => console.log(error.message));
-
-
-// Set X-XSS-Protection
-app.use(helmet.xssFilter());
-
 
 // Set Content Security Policy
-app.use(
-   helmet.contentSecurityPolicy({
-       directives: {
-           defaultSrc: ["'none'"],
-           scriptSrc: ["'self'", "'unsafe-inline'"],
-           imgSrc: ["'self'"],
-           // Add more directives as needed
-       },
-   })
-);
+app.use(helmet());
+
+// app.use(
+//    helmet.contentSecurityPolicy({
+//        directives: {
+//            defaultSrc: ['none'],
+//            scriptSrc: ['self', 'unsafe-inline'],
+//            imgSrc: ["self"],
+//            // Add more directives as needed
+//        },
+//    })
+// );
 
 
 app.use(bodyParser.json({ limit: '30mb', extended: true }));
@@ -42,6 +33,12 @@ app.use(cors());
 
 app.use('/posts', postRoutes);
 
+const PORT = process.env.PORT || 5000;
+const CONNECTION_URL = process.env.CONNECTION_URL;
+
+mongoose.connect(CONNECTION_URL)
+   .then(() =>  app.listen(PORT, () => console.log(`Server running on port: ${PORT}`)))
+   .catch((error) => console.log(error.message));
 
 
 
