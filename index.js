@@ -18,9 +18,10 @@ app.use(helmet({
         useDefaults: false,
         directives: {
           defaultSrc: ["'self'"],
-          scriptSrc: ["'self'", "example.com"],
+          scriptSrc: ["'self'", "unsafe-inline"],
           objectSrc: ["'none'"],
-          upgradeInsecureRequests: [],
+          imgSrc: ["'self'"],
+        //   upgradeInsecureRequests: [],
         },
       },
   }));
