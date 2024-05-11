@@ -14,8 +14,15 @@ const app = express();
 
 // Set Content Security Policy
 app.use(helmet({
-    contentSecurityPolicy: false,
-    xDownloadOptions: false,
+    contentSecurityPolicy: {
+        useDefaults: false,
+        directives: {
+          defaultSrc: ["'self'"],
+          scriptSrc: ["'self'", "example.com"],
+          objectSrc: ["'none'"],
+          upgradeInsecureRequests: [],
+        },
+      },
   }));
 
 // app.use(
